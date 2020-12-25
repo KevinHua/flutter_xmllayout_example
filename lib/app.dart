@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_xmllayout_example/routes.dart';
 import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 import 'i18n/gen/delegate.dart';
 import 'pages/home/home.xml.dart';
@@ -9,11 +10,7 @@ import 'services/LocaleChanger.dart';
 import 'services/ThemeChanger.dart';
 
 class MyApp extends StatelessWidget {
-
-  const MyApp({
-    Key key,
-    this.routeObserver
-  }) : super(key: key);
+  const MyApp({Key key, this.routeObserver}) : super(key: key);
 
   final RouteObserver<PageRoute> routeObserver;
 
@@ -23,15 +20,15 @@ class MyApp extends StatelessWidget {
     final localeChanger = Provider.of<LocaleChanger>(context);
     final themeChanger = Provider.of<ThemeChanger>(context);
 
-    return MaterialApp(
+    return GetMaterialApp(
       navigatorObservers: [routeObserver],
       title: 'Flutter Demo',
-      
+
       //
       // theme
       //
       theme: themeChanger.theme,
-      
+
       //
       // localization
       //
@@ -47,7 +44,7 @@ class MyApp extends StatelessWidget {
       // routing
       //
       onGenerateRoute: (RouteSettings settings) {
-				return getRoute(settings);
+        return getRoute(settings);
       },
 
       home: HomePage(),

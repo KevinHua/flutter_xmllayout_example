@@ -1,3 +1,5 @@
+import '../../games/gamewidget.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'tabs.ctrl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xmllayout_helpers/flutter_xmllayout_helpers.dart';
@@ -55,10 +57,10 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 0),
-                child: Text(
-                  'page 1',
+              Expanded(
+                flex: 1,
+                child: WebView(
+                  initialUrl: 'http://www.baidu.com/',
                 ),
               ),
               RaisedButton(
@@ -72,10 +74,11 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 0),
-                child: Text(
-                  'page 2',
+              SizedBox(
+                height: 600,
+                width: 350,
+                child: GameWidget(
+
                 ),
               ),
               RaisedButton(

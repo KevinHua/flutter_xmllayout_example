@@ -1,3 +1,4 @@
+import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xmllayout_helpers/flutter_xmllayout_helpers.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,8 @@ import 'services/ThemeChanger.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Flame.init();
+  await Flame.images.loadAll(['explosion.png', 'crate.png']);
 
   final RouteObserver<PageRoute> routeObserver = new RouteObserver<PageRoute>();
   final _prefs = await SharedPreferences.getInstance();
@@ -23,8 +26,7 @@ void main() async {
   final authService = AuthService(persistentStorage);
   authService.coldLogin();
 
-  runApp(
-    MultiProvider(
+  runApp(MultiProvider(
       //
       // registering dependencies
       //
@@ -32,14 +34,13 @@ void main() async {
         Provider<RouteObserver<Route>>.value(value: routeObserver),
         Provider<PipeProvider>(create: (context) => _createPipeProvider()),
         Provider<PersistentStorage>.value(value: persistentStorage),
-        ChangeNotifierProvider<LocaleChanger>(create: (_) => LocaleChanger(persistentStorage)),
-        ChangeNotifierProvider<ThemeChanger>(create: (_) => ThemeChanger(persistentStorage)),
+        ChangeNotifierProvider<LocaleChanger>(
+            create: (_) => LocaleChanger(persistentStorage)),
+        ChangeNotifierProvider<ThemeChanger>(
+            create: (_) => ThemeChanger(persistentStorage)),
         Provider<AuthService>.value(value: authService),
         Provider<DataService>(create: (_) => DataService()),
-      ],
-      child: MyApp(routeObserver: routeObserver)
-    )
-  );
+      ], child: MyApp(routeObserver: routeObserver)));
 }
 
 PipeProvider _createPipeProvider() {

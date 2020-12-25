@@ -1,3 +1,6 @@
+import 'package:get/get.dart';
+import '../../states/ObxWrapper.dart';
+import '../../states/counter.getx.dart';
 import '../../services/AuthService.dart';
 import 'login.ctrl.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +20,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> with RouteAware {
   LoginController ctrl;
   AuthService authService;
+  Counter counter;
   RouteObserver<Route> _routeObserver;
   
   // Called when the top route has been popped off, and the current route shows up.
@@ -43,6 +47,7 @@ class _LoginPageState extends State<LoginPage> with RouteAware {
   void initState() {
     super.initState();
     ctrl = new LoginController();
+    ctrl._counter = counter = Get.put(Counter());
     WidgetsBinding.instance.addPostFrameCallback((_) => ctrl.afterFirstBuild(context));
   }
 
@@ -172,6 +177,54 @@ class _LoginPageState extends State<LoginPage> with RouteAware {
                   );
                 },
               ),
+              ObxWrapper(
+                (BuildContext context) {
+                  return Column(
+                    children: [
+                      Text(
+                        'Clicks: ${ctrl.counter.count}',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      WidgetHelpers.ifTrue(counter.count >= 3,
+                        () => Text(
+                          'Clicks: ${ctrl.counter.d}',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                        () => Container(width: 0, height: 0)
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        child: SizedBox(
+                          width: _pipeProvider.transform(context, "widthPercent", 75, []),
+                          child: RaisedButton(
+                            onPressed: () => ctrl.counter.add_d(0.1),
+                            child: Text(
+                              'add d',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+                context: context,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                child: SizedBox(
+                  width: _pipeProvider.transform(context, "widthPercent", 75, []),
+                  child: RaisedButton(
+                    onPressed: () => ctrl.incrementCounter(context),
+                    child: Text(
+                      'increment',
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -184,6 +237,8 @@ class _LoginPageState extends State<LoginPage> with RouteAware {
 class LoginControllerBase {
   bool _loaded = false;
   final formGroup = new FormGroup();
+  Counter _counter;
+  Counter get counter => _counter;
   AuthService _authService;
   AuthService get authService => _authService;
   Map<String, dynamic> _attachedControllers = Map();

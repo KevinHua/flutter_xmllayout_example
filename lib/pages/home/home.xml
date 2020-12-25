@@ -1,5 +1,7 @@
 <HomePage controller="HomeController">
 
+  <!-- <var name="animationController" value="AnimationController(vsync: this, duration: Duration(milliseconds: 1500))" /> -->
+
   <Scaffold>
     <appBar>
       <AppBar>
@@ -12,18 +14,29 @@
     <body>
       <Column crossAxisAlignment="center" mainAxisAlignment="center">
 
-      <!-- <Transform :use="translate">
-        <apply-animation curve="easeOut" duration="milliseconds: 2000" autoTrigger>
-            <offset type="Offset" begin="Offset(0, 0)" end="Offset(50, 200)" />
-        </apply-animation>
-        <Container color="red" width="100" height="100" />
-      </Transform> -->
+        <!-- use var name animationController -->
+        <!-- <Transform :use="translate">
+          <apply-animation controller="ctrl.animationController" autoTrigger="false"
+            statusListener="(status) => ctrl.aniStatusChanged(context, status)">
+              <offset type="Offset" begin="Offset(0, 0)" end="Offset(50, 200)" />
+          </apply-animation>
+          <Container color="green" width="100" height="100" />
+        </Transform> -->
+
+        <Transform :use="translate">
+          <apply-animation curve="easeOut" duration="milliseconds: 2000" autoTrigger="true" repeats="4"
+            statusListener="(status) => ctrl.aniStatusChanged(context, status)">
+              <offset type="Offset" begin="Offset(0, 100)" end="Offset(100, 0)" />
+          </apply-animation>
+          <Container color="red" width="100" height="100" />
+        </Transform>
 
         <RaisedButton :margin="0 16 8" :width="100 | widthPercent" :text="'login' | translate" onPressed="() => ctrl.gotoLogin(context)"></RaisedButton>
         <RaisedButton :margin="8 16" :width="75 | widthPercent" :text="'signup' | translate" onPressed="() => ctrl.gotoSignup(context)"></RaisedButton>
         <RaisedButton :margin="8 16" :width="100 | widthPercent" :text="'list' | translate" onPressed="() => ctrl.gotoList(context)"></RaisedButton>
         <RaisedButton :margin="8 16" :width="75 | widthPercent" :text="'settings' | translate" onPressed="() => ctrl.gotoSettings(context)"></RaisedButton>
         <RaisedButton :margin="8 16" :width="75 | widthPercent" :text="'tabs' | translate" onPressed="() => ctrl.gotoTabs(context)"></RaisedButton>
+        <RaisedButton :margin="8 16" :width="75 | widthPercent" :text="'WebView' | translate" onPressed="() => ctrl.gotoWebView(context)"></RaisedButton>
       </Column>
     </body>
   </Scaffold>

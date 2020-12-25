@@ -1,4 +1,6 @@
-<TabsPage controller="TabsPageController">
+<TabsPage controller="TabsPageController"
+	xmlns:itemmodel="package:webview_flutter/webview_flutter.dart"
+	xmlns:gamewidget="../../games/gamewidget.dart">
 
 	<with mixin="TickerProviderStateMixin"></with>
 	<var name="tabController" value="TabController(length: 3, vsync: this)"></var>
@@ -15,11 +17,11 @@
     <body>
 			<TabBarView controller="tabController" physics="NeverScrollableScrollPhysics()">
 				<Column mainAxisAlignment="center">
-					<Text text="'page 1'" :margin="100 0" />
+					<WebView initialUrl="'http://www.baidu.com/'" :flex="1"></WebView>
 					<RaisedButton :text="'Goto 2'" onPressed="() => ctrl.selectTab(1)"></RaisedButton>
 				</Column>
 				<Column mainAxisAlignment="center">
-					<Text text="'page 2'" :margin="100 0" />
+					<GameWidget :width="350" :height="600"></GameWidget>
 					<RaisedButton :text="'Goto 3'" onPressed="() => ctrl.selectTab(2)"></RaisedButton>
 				</Column>
 				<Column mainAxisAlignment="center">

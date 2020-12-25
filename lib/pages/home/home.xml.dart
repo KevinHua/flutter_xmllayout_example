@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   HomeController ctrl;
   
 
@@ -49,6 +49,26 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          AnimationBuilder(
+            autoTrigger: true,
+            curve: Curves.easeOut,
+            duration: Duration(milliseconds: 2000),
+            repeats: 4,
+            statusListener: (status) => ctrl.aniStatusChanged(context, status),
+            tweenMap: {
+              "offset": Tween<Offset>(begin: Offset(0, 100), end: Offset(100, 0))
+            },
+            builderMap: (Map<String, Animation> animations, Widget child) {
+              return Transform.translate(
+                offset: animations["offset"].value,
+                child: Container(
+                  color: Colors.red,
+                  height: 100,
+                  width: 100,
+                ),
+              );
+            },
+          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
             child: SizedBox(
@@ -105,6 +125,18 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () => ctrl.gotoTabs(context),
                 child: Text(
                   _pipeProvider.transform(context, "translate", 'tabs', []),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: SizedBox(
+              width: _pipeProvider.transform(context, "widthPercent", 75, []),
+              child: RaisedButton(
+                onPressed: () => ctrl.gotoWebView(context),
+                child: Text(
+                  _pipeProvider.transform(context, "translate", 'WebView', []),
                 ),
               ),
             ),

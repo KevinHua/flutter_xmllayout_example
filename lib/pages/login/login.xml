@@ -1,6 +1,10 @@
 <LoginPage controller="LoginController" routeAware
-    xmlns="../../services/AuthService.dart">
+    xmlns="../../services/AuthService.dart"
+    xmlns:getx="package:get/get.dart"
+    xmlns:getx_states="../../states/counter.getx.dart"
+    xmlns:getx_obxwidget="../../states/ObxWrapper.dart">
 	
+    <var name="counter" type="Counter" value="Get.put(Counter())"/>
 	<provider type="AuthService" name="authService" />
 
 	<Scaffold>
@@ -42,6 +46,26 @@
                     
                     <Text text="ctrl.errorMessage | behavior" :margin="16" />
 
+                    <ObxWrapper context="context">
+                        <builder>
+                            <Column>
+                                <Text text="'Clicks: ${ctrl.counter.count}'">
+                                    <style>
+                                        <TextStyle fontSize="20" />
+                                    </style>
+                                </Text>
+
+                                <Text :if="counter.count >= 3" text="'Clicks: ${ctrl.counter.d}'">
+                                    <style>
+                                        <TextStyle fontSize="20" />
+                                    </style>
+                                </Text>
+                                <RaisedButton :margin="8 16" :width="75 | widthPercent" :text="'add d'" onPressed="() => ctrl.counter.add_d(0.1)"></RaisedButton>
+                            </Column>
+                        </builder>
+                    </ObxWrapper>
+                    <RaisedButton :margin="8 16" :width="75 | widthPercent" :text="'increment'" onPressed="() => ctrl.incrementCounter(context)"></RaisedButton>
+                    
                 </Column>
             </SingleChildScrollView>
 
