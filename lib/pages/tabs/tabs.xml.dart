@@ -75,8 +75,8 @@ class _TabsPageState extends State<TabsPage> with TickerProviderStateMixin {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                height: 600,
-                width: 350,
+                height: 400,
+                width: 200,
                 child: GameWidget(
 
                 ),

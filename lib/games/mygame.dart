@@ -103,7 +103,9 @@ class MyGame extends BaseGame with TapDetector {
 
   @override
   void onTapDown(TapDownDetails details) {
-    final position = details.globalPosition;
+    print(details);
+
+    final position = details.localPosition;
     components.whereType<Crate>().forEach((crate) {
       final remove = crate.toRect().contains(position);
       if (remove) {

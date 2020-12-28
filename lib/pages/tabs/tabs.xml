@@ -21,7 +21,7 @@
 					<RaisedButton :text="'Goto 2'" onPressed="() => ctrl.selectTab(1)"></RaisedButton>
 				</Column>
 				<Column mainAxisAlignment="center">
-					<GameWidget :width="350" :height="600"></GameWidget>
+					<GameWidget :width="200" :height="400"></GameWidget>
 					<RaisedButton :text="'Goto 3'" onPressed="() => ctrl.selectTab(2)"></RaisedButton>
 				</Column>
 				<Column mainAxisAlignment="center">
